@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind CSS v3 学习字典</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                        custom: {
+                            100: '#f0f9ff',
+                            200: '#e0f2fe',
+                            300: '#bae6fd',
+                            400: '#7dd3fc',
+                            500: '#38bdf8',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .preview-box {
+            transition: all 0.2s;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .code-block {
+            background: #1F2937;
+            color: #E5E7EB;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        .category-title {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            padding: 1rem 0;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 2px solid #E5E7EB;
+        }
+        .example-card {
+            border: 1px solid #E5E7EB;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .nav-link {
+            transition: all 0.2s;
+        }
+        .nav-link:hover {
+            color: #3B82F6;
+            transform: translateX(4px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <h1 class="text-2xl font-bold text-gray-900">Tailwind CSS v3 可视化学习字典</h1>
+            <p class="text-gray-600 mt-1 text-sm">像查字典一样快速学习Tailwind CSS语法和效果</p>
+            
+            <nav class="mt-4 flex flex-wrap gap-2">
+                <a href="#interactivity" class="nav-link text-sm px-3 py-1 bg-gray-100 rounded-full">交互</a>
+                <a href="#transforms" class="nav-link text-sm px-3 py-1 bg-gray-100 rounded-full">变换</a>
+                <a href="#filters" class="nav-link text-sm px-3 py-1 bg-gray-100 rounded-full">滤镜</a>
+                <a href="#svg" class="nav-link text-sm px-3 py-1 bg-gray-100 rounded-full">SVG</a>
+                <a href="#customization" class="nav-link text-sm px-3 py-1 bg-gray-100 rounded-full">自定义</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- 交互状态 -->
+        <section id="interactivity">
+            <h2 class="category-title text-2xl font-semibold">交互状态 (Interactivity)</h2>
+            
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">悬停状态 (Hover)</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;button class="px-6 py-3 bg-blue-500 text-white rounded-lg transition-all duration-300 hover:bg-blue-700 hover:scale-105 hover:shadow-lg"&gt;<br>
+                        &nbsp;&nbsp;悬停查看效果<br>
+                        &lt;/button&gt;
+                    </div>
+                    <div class="preview-box">
+                        <button class="px-6 py-3 bg-blue-500 text-white rounded-lg transition-all duration-300 hover:bg-blue-700 hover:scale-105 hover:shadow-lg">
+                            悬停查看效果
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">焦点状态 (Focus)</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;input type="text" placeholder="点击或按Tab键聚焦" class="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"&gt;
+                    </div>
+                    <div class="preview-box">
+                        <input type="text" placeholder="点击或按Tab键聚焦" class="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-64">
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">激活状态 (Active)</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;button class="px-6 py-3 bg-green-500 text-white rounded-lg transition-all duration-200 hover:bg-green-600 active:bg-green-700 active:scale-95"&gt;<br>
+                        &nbsp;&nbsp;点击查看效果<br>
+                        &lt;/button&gt;
+                    </div>
+                    <div class="preview-box">
+                        <button class="px-6 py-3 bg-green-500 text-white rounded-lg transition-all duration-200 hover:bg-green-600 active:bg-green-700 active:scale-95">
+                            点击查看效果
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 变换 -->
+        <section id="transforms" class="mt-12">
+            <h2 class="category-title text-2xl font-semibold">变换 (Transforms)</h2>
+            
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">旋转 (Rotate)</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="flex gap-8 justify-center"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-blue-500 rounded-lg transform rotate-0"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-blue-500 rounded-lg transform rotate-45"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-blue-500 rounded-lg transform rotate-90"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-blue-500 rounded-lg transform rotate-180"&gt;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="flex gap-8 justify-center">
+                            <div class="w-16 h-16 bg-blue-500 rounded-lg transform rotate-0 flex items-center justify-center text-white text-xs">0°</div>
+                            <div class="w-16 h-16 bg-blue-500 rounded-lg transform rotate-45 flex items-center justify-center text-white text-xs">45°</div>
+                            <div class="w-16 h-16 bg-blue-500 rounded-lg transform rotate-90 flex items-center justify-center text-white text-xs">90°</div>
+                            <div class="w-16 h-16 bg-blue-500 rounded-lg transform rotate-180 flex items-center justify-center text-white text-xs">180°</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">缩放 (Scale)</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="flex gap-8 justify-center"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-green-500 rounded-lg transform scale-75"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-green-500 rounded-lg transform scale-100"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-green-500 rounded-lg transform scale-125"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-green-500 rounded-lg transform scale-150"&gt;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="flex gap-8 justify-center">
+                            <div class="w-16 h-16 bg-green-500 rounded-lg transform scale-75 flex items-center justify-center text-white text-xs">75%</div>
+                            <div class="w-16 h-16 bg-green-500 rounded-lg transform scale-100 flex items-center justify-center text-white text-xs">100%</div>
+                            <div class="w-16 h-16 bg-green-500 rounded-lg transform scale-125 flex items-center justify-center text-white text-xs">125%</div>
+                            <div class="w-16 h-16 bg-green-500 rounded-lg transform scale-150 flex items-center justify-center text-white text-xs">150%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">斜切 (Skew)</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="flex gap-8 justify-center"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-purple-500 rounded-lg transform skew-x-0"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-purple-500 rounded-lg transform skew-x-6"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-purple-500 rounded-lg transform skew-x-12"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-purple-500 rounded-lg transform skew-y-6"&gt;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="flex gap-8 justify-center">
+                            <div class="w-16 h-16 bg-purple-500 rounded-lg transform skew-x-0 flex items-center justify-center text-white text-xs">0</div>
+                            <div class="w-16 h-16 bg-purple-500 rounded-lg transform skew-x-6 flex items-center justify-center text-white text-xs">X-6</div>
+                            <div class="w-16 h-16 bg-purple-500 rounded-lg transform skew-x-12 flex items-center justify-center text-white text-xs">X-12</div>
+                            <div class="w-16 h-16 bg-purple-500 rounded-lg transform skew-y-6 flex items-center justify-center text-white text-xs">Y-6</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 滤镜 -->
+        <section id="filters" class="mt-12">
+            <h2 class="category-title text-2xl font-semibold">滤镜 (Filters)</h2>
+            
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">模糊效果 (Blur)</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="flex gap-6 items-center"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-24 h-24 bg-blue-500 rounded-lg"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-24 h-24 bg-blue-500 rounded-lg filter blur-sm"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-24 h-24 bg-blue-500 rounded-lg filter blur"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-24 h-24 bg-blue-500 rounded-lg filter blur-md"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-24 h-24 bg-blue-500 rounded-lg filter blur-lg"&gt;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="flex gap-6 items-center">
+                            <div class="w-24 h-24 bg-blue-500 rounded-lg flex items-center justify-center text-white text-xs">无模糊</div>
+                            <div class="w-24 h-24 bg-blue-500 rounded-lg filter blur-sm flex items-center justify-center text-white text-xs">blur-sm</div>
+                            <div class="w-24 h-24 bg-blue-500 rounded-lg filter blur flex items-center justify-center text-white text-xs">blur</div>
+                            <div class="w-24 h-24 bg-blue-500 rounded-lg filter blur-md flex items-center justify-center text-white text-xs">blur-md</div>
+                            <div class="w-24 h-24 bg-blue-500 rounded-lg filter blur-lg flex items-center justify-center text-white text-xs">blur-lg</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">亮度与对比度</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="grid grid-cols-3 gap-4"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-20 bg-blue-500 rounded filter brightness-50"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-20 bg-blue-500 rounded filter brightness-100"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-20 bg-blue-500 rounded filter brightness-150"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-20 bg-blue-500 rounded filter contrast-50"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-20 bg-blue-500 rounded filter contrast-100"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-20 bg-blue-500 rounded filter contrast-150"&gt;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="h-20 bg-blue-500 rounded filter brightness-50 flex items-center justify-center text-white text-xs">brightness-50</div>
+                            <div class="h-20 bg-blue-500 rounded filter brightness-100 flex items-center justify-center text-white text-xs">brightness-100</div>
+                            <div class="h-20 bg-blue-500 rounded filter brightness-150 flex items-center justify-center text-white text-xs">brightness-150</div>
+                            <div class="h-20 bg-blue-500 rounded filter contrast-50 flex items-center justify-center text-white text-xs">contrast-50</div>
+                            <div class="h-20 bg-blue-500 rounded filter contrast-100 flex items-center justify-center text-white text-xs">contrast-100</div>
+                            <div class="h-20 bg-blue-500 rounded filter contrast-150 flex items-center justify-center text-white text-xs">contrast-150</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">灰度与饱和度</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="grid grid-cols-3 gap-4"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-20 bg-gradient-to-r from-red-500 to-blue-500 rounded filter grayscale-0"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-20 bg-gradient-to-r from-red-500 to-blue-500 rounded filter grayscale"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-20 bg-gradient-to-r from-red-500 to-blue-500 rounded filter grayscale-full"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-20 bg-gradient-to-r from-red-500 to-blue-500 rounded filter saturate-0"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-20 bg-gradient-to-r from-red-500 to-blue-500 rounded filter saturate-100"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-20 bg-gradient-to-r from-red-500 to-blue-500 rounded filter saturate-200"&gt;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="h-20 bg-gradient-to-r from-red-500 to-blue-500 rounded filter grayscale-0 flex items-center justify-center text-white text-xs">grayscale-0</div>
+                            <div class="h-20 bg-gradient-to-r from-red-500 to-blue-500 rounded filter grayscale flex items-center justify-center text-white text-xs">grayscale</div>
+                            <div class="h-20 bg-gradient-to-r from-red-500 to-blue-500 rounded filter grayscale-full flex items-center justify-center text-white text-xs">grayscale-full</div>
+                            <div class="h-20 bg-gradient-to-r from-red-500 to-blue-500 rounded filter saturate-0 flex items-center justify-center text-white text-xs">saturate-0</div>
+                            <div class="h-20 bg-gradient-to-r from-red-500 to-blue-500 rounded filter saturate-100 flex items-center justify-center text-white text-xs">saturate-100</div>
+                            <div class="h-20 bg-gradient-to-r from-red-500 to-blue-500 rounded filter saturate-200 flex items-center justify-center text-white text-xs">saturate-200</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SVG处理 -->
+        <section id="svg" class="mt-12">
+            <h2 class="category-title text-2xl font-semibold">SVG处理</h2>
+            
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">SVG颜色与样式</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="flex gap-8 justify-center items-center"&gt;<br>
+                        &nbsp;&nbsp;&lt;svg class="w-12 h-12 text-red-500" fill="currentColor" viewBox="0 0 20 20"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/&gt;<br>
+                        &nbsp;&nbsp;&lt;/svg&gt;<br>
+                        &nbsp;&nbsp;&lt;svg class="w-12 h-12 text-green-500" fill="currentColor" viewBox="0 0 20 20"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/&gt;<br>
+                        &nbsp;&nbsp;&lt;/svg&gt;<br>
+                        &nbsp;&nbsp;&lt;svg class="w-12 h-12 text-blue-500" fill="currentColor" viewBox="0 0 20 20"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/&gt;<br>
+                        &nbsp;&nbsp;&lt;/svg&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="flex gap-8 justify-center items-center">
+                            <svg class="w-12 h-12 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                            </svg>
+                            <svg class="w-12 h-12 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <svg class="w-12 h-12 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">SVG动画</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="flex gap-8 justify-center items-center"&gt;<br>
+                        &nbsp;&nbsp;&lt;svg class="w-12 h-12 text-purple-500 animate-spin" fill="none" viewBox="0 0 24 24"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/&gt;<br>
+                        &nbsp;&nbsp;&lt;/svg&gt;<br>
+                        &nbsp;&nbsp;&lt;svg class="w-12 h-12 text-pink-500 animate-pulse" fill="currentColor" viewBox="0 0 20 20"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/&gt;<br>
+                        &nbsp;&nbsp;&lt;/svg&gt;<br>
+                        &nbsp;&nbsp;&lt;svg class="w-12 h-12 text-yellow-500 animate-bounce" fill="currentColor" viewBox="0 0 20 20"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/&gt;<br>
+                        &nbsp;&nbsp;&lt;/svg&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="flex gap-8 justify-center items-center">
+                            <svg class="w-12 h-12 text-purple-500 animate-spin" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                            </svg>
+                            <svg class="w-12 h-12 text-pink-500 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+                            </svg>
+                            <svg class="w-12 h-12 text-yellow-500 animate-bounce" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 自定义配置 -->
+        <section id="customization" class="mt-12">
+            <h2 class="category-title text-2xl font-semibold">自定义配置 (Customization)</h2>
+            
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">自定义颜色</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        // tailwind.config.js<br>
+                        module.exports = {<br>
+                        &nbsp;&nbsp;theme: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;extend: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colors: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;custom: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100: '#f0f9ff',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;200: '#e0f2fe',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;300: '#bae6fd',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;400: '#7dd3fc',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;500: '#38bdf8',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;600: '#0284c7',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;700: '#0369a1',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;800: '#075985',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;900: '#0c4a6e',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}<br>
+                        }<br>
+                        <br>
+                        &lt;div class="flex gap-4"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-custom-100 rounded"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-custom-300 rounded"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-custom-500 rounded"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-custom-700 rounded"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-custom-900 rounded"&gt;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="flex gap-4">
+                            <div class="w-16 h-16 bg-custom-100 rounded flex items-center justify-center text-xs">100</div>
+                            <div class="w-16 h-16 bg-custom-300 rounded flex items-center justify-center text-xs">300</div>
+                            <div class="w-16 h-16 bg-custom-500 rounded flex items-center justify-center text-xs">500</div>
+                            <div class="w-16 h-16 bg-custom-700 rounded flex items-center justify-center text-xs">700</div>
+                            <div class="w-16 h-16 bg-custom-900 rounded flex items-center justify-center text-xs">900</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">自定义动画</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        // tailwind.config.js<br>
+                        module.exports = {<br>
+                        &nbsp;&nbsp;theme: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;extend: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;animation: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'bounce-slow': 'bounce 2s infinite',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}<br>
+                        }<br>
+                        <br>
+                        &lt;div class="flex gap-6 items-center"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-blue-500 rounded-lg animate-pulse-slow"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="text-sm"&gt;慢速脉冲 (animate-pulse-slow)&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-green-500 rounded-lg animate-bounce-slow"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="text-sm"&gt;慢速弹跳 (animate-bounce-slow)&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="flex gap-6 items-center">
+                            <div class="w-16 h-16 bg-blue-500 rounded-lg animate-pulse-slow"></div>
+                            <div class="text-sm">慢速脉冲 (animate-pulse-slow)</div>
+                            <div class="w-16 h-16 bg-green-500 rounded-lg animate-bounce-slow"></div>
+                            <div class="text-sm">慢速弹跳 (animate-bounce-slow)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>Tailwind CSS v3 可视化学习字典</p>
+            <p class="text-gray-400 text-sm mt-2">基于Tailwind CSS官方文档制作 - 供学习参考使用</p>
+            <div class="mt-4">
+                <a href="#" class="text-blue-300 hover:text-blue-100 text-sm">返回顶部 ↑</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

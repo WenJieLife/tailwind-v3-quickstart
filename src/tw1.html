@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind CSS v3 学习字典</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#F59E0B'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .preview-box {
+            transition: all 0.2s;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .code-block {
+            background: #1F2937;
+            color: #E5E7EB;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        .category-title {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            padding: 1rem 0;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 2px solid #E5E7EB;
+        }
+        .example-card {
+            border: 1px solid #E5E7EB;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold text-gray-900">Tailwind CSS v3 可视化学习字典</h1>
+            <p class="text-gray-600 mt-2">像查字典一样快速学习Tailwind CSS语法和效果</p>
+
+            <nav class="mt-4 flex flex-wrap gap-2">
+                <a href="#layout" class="nav-link text-sm px-3 py-1 bg-gray-100 rounded-full">布局</a>
+                <a href="#spacing" class="nav-link text-sm px-3 py-1 bg-gray-100 rounded-full">间距</a>
+                <a href="#colors" class="nav-link text-sm px-3 py-1 bg-gray-100 rounded-full">颜色</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- 布局 -->
+        <section id="layout">
+            <h2 class="category-title text-2xl font-semibold">布局 (Layout)</h2>
+            
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">Flex布局</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="flex justify-center items-center p-4 bg-gray-100 rounded-lg"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-primary rounded"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-secondary rounded ml-4"&gt;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box flex justify-center items-center p-4 bg-gray-100 rounded-lg">
+                        <div class="w-16 h-16 bg-primary rounded"></div>
+                        <div class="w-16 h-16 bg-secondary rounded ml-4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">Grid布局</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="grid grid-cols-3 gap-4"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-primary h-12 rounded"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-secondary h-12 rounded"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-accent h-12 rounded"&gt;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="bg-primary h-12 rounded"></div>
+                            <div class="bg-secondary h-12 rounded"></div>
+                            <div class="bg-accent h-12 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 间距 -->
+        <section id="spacing" class="mt-12">
+            <h2 class="category-title text-2xl font-semibold">间距 (Spacing)</h2>
+            
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">外边距 (Margin)</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="flex"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="m-2 p-4 bg-primary text-white rounded"&gt;m-2&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="m-4 p-4 bg-primary text-white rounded"&gt;m-4&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="m-8 p-4 bg-primary text-white rounded"&gt;m-8&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="flex">
+                            <div class="m-2 p-4 bg-primary text-white rounded">m-2</div>
+                            <div class="m-4 p-4 bg-primary text-white rounded">m-4</div>
+                            <div class="m-8 p-4 bg-primary text-white rounded">m-8</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">内边距 (Padding)</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="flex"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="p-2 bg-secondary text-white rounded"&gt;p-2&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="p-4 bg-secondary text-white rounded ml-4"&gt;p-4&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="p-8 bg-secondary text-white rounded ml-4"&gt;p-8&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="flex">
+                            <div class="p-2 bg-secondary text-white rounded">p-2</div>
+                            <div class="p-4 bg-secondary text-white rounded ml-4">p-4</div>
+                            <div class="p-8 bg-secondary text-white rounded ml-4">p-8</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 颜色 -->
+        <section id="colors" class="mt-12">
+            <h2 class="category-title text-2xl font-semibold">颜色 (Colors)</h2>
+            
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">文本颜色</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;p class="text-red-500"&gt;红色文本&lt;/p&gt;<br>
+                        &lt;p class="text-green-500"&gt;绿色文本&lt;/p&gt;<br>
+                        &lt;p class="text-blue-500"&gt;蓝色文本&lt;/p&gt;<br>
+                        &lt;p class="text-purple-500"&gt;紫色文本&lt;/p&gt;
+                    </div>
+                    <div class="preview-box flex flex-col space-y-2">
+                        <p class="text-red-500">红色文本</p>
+                        <p class="text-green-500">绿色文本</p>
+                        <p class="text-blue-500">蓝色文本</p>
+                        <p class="text-purple-500">紫色文本</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="p-4 border-b bg-gray-50">
+                    <h3 class="font-medium">背景颜色</h3>
+                </div>
+                <div class="p-4 border-b">
+                    <div class="code-block mb-4">
+                        &lt;div class="flex space-x-4"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="p-4 bg-red-100 rounded"&gt;bg-red-100&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="p-4 bg-green-100 rounded"&gt;bg-green-100&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="p-4 bg-blue-100 rounded"&gt;bg-blue-100&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="flex space-x-4">
+                            <div class="p-4 bg-red-100 rounded">bg-red-100</div>
+                            <div class="p-4 bg-green-100 rounded">bg-green-100</div>
+                            <div class="p-4 bg-blue-100 rounded">bg-blue-100</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

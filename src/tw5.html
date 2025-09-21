@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind CSS v3 学习字典 - 高级功能</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                        custom: {
+                            100: '#f0f9ff',
+                            200: '#e0f2fe',
+                            300: '#bae6fd',
+                            400: '#7dd3fc',
+                            500: '#38bdf8',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'spin-slow': 'spin 3s linear infinite',
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    },
+                    fontFamily: {
+                        'custom': ['Georgia', 'serif'],
+                    }
+                }
+            },
+            plugins: [
+                function({ addUtilities }) {
+                    addUtilities({
+                        '.scrollbar-hide': {
+                            '-ms-overflow-style': 'none',
+                            'scrollbar-width': 'none',
+                            '&::-webkit-scrollbar': {
+                                display: 'none'
+                            }
+                        },
+                        '.scrollbar-default': {
+                            '-ms-overflow-style': 'auto',
+                            'scrollbar-width': 'auto',
+                            '&::-webkit-scrollbar': {
+                                display: 'block'
+                            }
+                        }
+                    })
+                }
+            ]
+        }
+    </script>
+    <style>
+        .preview-box {
+            transition: all 0.2s;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .code-block {
+            background: #1F2937;
+            color: #E5E7EB;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        .category-title {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            padding: 1rem 0;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 2px solid #E5E7EB;
+        }
+        .example-card {
+            border: 1px solid #E5E7EB;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .nav-link {
+            transition: all 0.2s;
+        }
+        .nav-link:hover {
+            color: #3B82F6;
+            transform: translateX(4px);
+        }
+        .tooltip {
+            position: relative;
+        }
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        @media print {
+            .print\:hidden {
+                display: none !important;
+            }
+            .print\:block {
+                display: block !important;
+            }
+            .print\:text-black {
+                color: black !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+    <header class="bg-white shadow-sm sticky top-0 z-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Tailwind CSS v3 可视化学习字典</h1>
+                    <p class="text-gray-600 dark:text-gray-400 mt-1 text-sm">像查字典一样快速学习Tailwind CSS语法和效果</p>
+                </div>
+                <button id="theme-toggle" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg text-gray-800 dark:text-white">
+                    切换暗黑模式
+                </button>
+            </div>
+            
+            <nav class="mt-4 flex flex-wrap gap-2">
+                <a href="#dark-mode" class="nav-link text-sm px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">暗黑模式</a>
+                <a href="#advanced-responsive" class="nav-link text-sm px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">高级响应式</a>
+                <a href="#custom-utilities" class="nav-link text-sm px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">自定义工具</a>
+                <a href="#print-styles" class="nav-link text-sm px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">打印样式</a>
+                <a href="#arbitrary-values" class="nav-link text-sm px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">任意值</a>
+                <a href="#advanced-animations" class="nav-link text-sm px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">高级动画</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- 暗黑模式 -->
+        <section id="dark-mode">
+            <h2 class="category-title text-2xl font-semibold dark:text-white">暗黑模式 (Dark Mode)</h2>
+            
+            <div class="example-card dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 border-b bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-medium dark:text-white">暗黑模式切换</h3>
+                </div>
+                <div class="p-4 border-b dark:border-gray-700">
+                    <div class="code-block mb-4">
+                        // tailwind.config.js<br>
+                        module.exports = {<br>
+                        &nbsp;&nbsp;darkMode: 'class', // 使用class而不是media query<br>
+                        &nbsp;&nbsp;// ...其他配置<br>
+                        }<br>
+                        <br>
+                        &lt;body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;h2 class="text-xl font-bold dark:text-white"&gt;暗黑模式示例&lt;/h2&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="text-gray-700 dark:text-gray-300"&gt;这是一个暗黑模式示例&lt;/p&gt;<br>
+                        &nbsp;&nbsp;&lt;/div&gt;<br>
+                        &lt;/body&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
+                            <h2 class="text-xl font-bold dark:text-white">暗黑模式示例</h2>
+                            <p class="text-gray-700 dark:text-gray-300">这是一个暗黑模式示例。点击右上角按钮切换暗黑模式。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 border-b bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-medium dark:text-white">暗黑模式下的颜色</h3>
+                </div>
+                <div class="p-4 border-b dark:border-gray-700">
+                    <div class="code-block mb-4">
+                        &lt;div class="grid grid-cols-2 gap-4"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-blue-500 dark:bg-blue-800 p-4 rounded text-white"&gt;蓝色背景&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-green-500 dark:bg-green-800 p-4 rounded text-white"&gt;绿色背景&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-red-500 dark:bg-red-800 p-4 rounded text-white"&gt;红色背景&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-yellow-500 dark:bg-yellow-800 p-4 rounded text-white"&gt;黄色背景&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-blue-500 dark:bg-blue-800 p-4 rounded text-white">蓝色背景</div>
+                            <div class="bg-green-500 dark:bg-green-800 p-4 rounded text-white">绿色背景</div>
+                            <div class="bg-red-500 dark:bg-red-800 p-4 rounded text-white">红色背景</div>
+                            <div class="bg-yellow-500 dark:bg-yellow-800 p-4 rounded text-white">黄色背景</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 高级响应式设计 -->
+        <section id="advanced-responsive" class="mt-12">
+            <h2 class="category-title text-2xl font-semibold dark:text-white">高级响应式设计 (Advanced Responsive)</h2>
+            
+            <div class="example-card dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 border-b bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-medium dark:text-white">容器查询</h3>
+                </div>
+                <div class="p-4 border-b dark:border-gray-700">
+                    <div class="code-block mb-4">
+                        &lt;div class="@container"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-blue-100 p-4 @lg:bg-blue-200 @lg:p-8 @xl:bg-blue-300 @xl:p-12"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;h3 class="text-lg @lg:text-xl @xl:text-2xl font-bold"&gt;响应式容器&lt;/h3&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="text-base @lg:text-lg @xl:text-xl"&gt;根据容器宽度变化样式&lt;/p&gt;<br>
+                        &nbsp;&nbsp;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="@container border border-dashed border-gray-300 p-2">
+                            <div class="bg-blue-100 p-4 @lg:bg-blue-200 @lg:p-8 @xl:bg-blue-300 @xl:p-12">
+                                <h3 class="text-lg @lg:text-xl @xl:text-2xl font-bold">响应式容器</h3>
+                                <p class="text-base @lg:text-lg @xl:text-xl">根据容器宽度变化样式。调整容器大小查看效果。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 border-b bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-medium dark:text-white">响应式网格</h3>
+                </div>
+                <div class="p-4 border-b dark:border-gray-700">
+                    <div class="code-block mb-4">
+                        &lt;div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-blue-500 aspect-square rounded flex items-center justify-center text-white"&gt;1&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-blue-500 aspect-square rounded flex items-center justify-center text-white"&gt;2&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-blue-500 aspect-square rounded flex items-center justify-center text-white"&gt;3&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-blue-500 aspect-square rounded flex items-center justify-center text-white"&gt;4&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-blue-500 aspect-square rounded flex items-center justify-center text-white"&gt;5&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="bg-blue-500 aspect-square rounded flex items-center justify-center text-white"&gt;6&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                            <div class="bg-blue-500 aspect-square rounded flex items-center justify-center text-white">1</div>
+                            <div class="bg-blue-500 aspect-square rounded flex items-center justify-center text-white">2</div>
+                            <div class="bg-blue-500 aspect-square rounded flex items-center justify-center text-white">3</div>
+                            <div class="bg-blue-500 aspect-square rounded flex items-center justify-center text-white">4</div>
+                            <div class="bg-blue-500 aspect-square rounded flex items-center justify-center text-white">5</div>
+                            <div class="bg-blue-500 aspect-square rounded flex items-center justify-center text-white">6</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 自定义工具类 -->
+        <section id="custom-utilities" class="mt-12">
+            <h2 class="category-title text-2xl font-semibold dark:text-white">自定义工具类 (Custom Utilities)</h2>
+            
+            <div class="example-card dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 border-b bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-medium dark:text-white">自定义插件</h3>
+                </div>
+                <div class="p-4 border-b dark:border-gray-700">
+                    <div class="code-block mb-4">
+                        // tailwind.config.js<br>
+                        const plugin = require('tailwindcss/plugin')<br>
+                        <br>
+                        module.exports = {<br>
+                        &nbsp;&nbsp;plugins: [<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;plugin(function({ addUtilities }) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addUtilities({<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.scrollbar-hide': {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-ms-overflow-style': 'none',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'scrollbar-width': 'none',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&::-webkit-scrollbar': {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display: 'none'<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.scrollbar-default': {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-ms-overflow-style': 'auto',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'scrollbar-width': 'auto',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&::-webkit-scrollbar': {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display: 'block'<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;})<br>
+                        &nbsp;&nbsp;]<br>
+                        }<br>
+                        <br>
+                        &lt;div class="h-32 overflow-y-scroll scrollbar-hide"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="h-64"&gt;这个容器的滚动条被隐藏了&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="h-32 overflow-y-scroll scrollbar-hide border border-gray-300 p-4">
+                            <div class="h-64">这个容器的滚动条被隐藏了。尝试往下滚动鼠标滚轮，但看不到滚动条。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 border-b bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-medium dark:text-white">自定义字体</h3>
+                </div>
+                <div class="p-4 border-b dark:border-gray-700">
+                    <div class="code-block mb-4">
+                        // tailwind.config.js<br>
+                        module.exports = {<br>
+                        &nbsp;&nbsp;theme: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;extend: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fontFamily: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'custom': ['Georgia', 'serif'],<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}<br>
+                        }<br>
+                        <br>
+                        &lt;p class="font-custom text-xl"&gt;这是自定义字体示例&lt;/p&gt;
+                    </div>
+                    <div class="preview-box">
+                        <p class="font-custom text-xl">这是自定义字体示例 - Georgia字体</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 打印样式 -->
+        <section id="print-styles" class="mt-12">
+            <h2 class="category-title text-2xl font-semibold dark:text-white">打印样式 (Print Styles)</h2>
+            
+            <div class="example-card dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 border-b bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-medium dark:text-white">打印优化</h3>
+                </div>
+                <div class="p-4 border-b dark:border-gray-700">
+                    <div class="code-block mb-4">
+                        &lt;div class="bg-blue-100 p-4 print:bg-white print:text-black"&gt;<br>
+                        &nbsp;&nbsp;&lt;h3 class="text-lg font-bold print:text-xl"&gt;打印优化示例&lt;/h3&gt;<br>
+                        &nbsp;&nbsp;&lt;p class="print:text-sm"&gt;这段内容在打印时会变成黑白，并且背景变为白色。&lt;/p&gt;<br>
+                        &nbsp;&nbsp;&lt;button class="mt-4 px-4 py-2 bg-blue-500 text-white print:hidden"&gt;打印时这个按钮会隐藏&lt;/button&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="bg-blue-100 p-4 print:bg-white print:text-black border border-gray-300">
+                            <h3 class="text-lg font-bold print:text-xl">打印优化示例</h3>
+                            <p class="print:text-sm">这段内容在打印时会变成黑白，并且背景变为白色。</p>
+                            <button class="mt-4 px-4 py-2 bg-blue-500 text-white print:hidden">打印时这个按钮会隐藏</button>
+                            <p class="text-sm text-gray-600 mt-2">尝试使用浏览器的打印预览功能查看效果。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 border-b bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-medium dark:text-white">分页控制</h3>
+                </div>
+                <div class="p-4 border-b dark:border-gray-700">
+                    <div class="code-block mb-4">
+                        &lt;div class="break-inside-avoid"&gt;<br>
+                        &nbsp;&nbsp;&lt;h4 class="font-bold"&gt;避免分页的内容块&lt;/h4&gt;<br>
+                        &nbsp;&nbsp;&lt;p&gt;这个内容块在打印时会尽量避免被分页截断。&lt;/p&gt;<br>
+                        &lt;/div&gt;<br>
+                        &lt;div class="mt-4"&gt;<br>
+                        &nbsp;&nbsp;&lt;h4 class="font-bold"&gt;正常内容&lt;/h4&gt;<br>
+                        &nbsp;&nbsp;&lt;p&gt;这个内容块在打印时可能会被分页截断。&lt;/p&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="break-inside-avoid border border-dashed border-gray-300 p-4 mb-4">
+                            <h4 class="font-bold">避免分页的内容块</h4>
+                            <p>这个内容块在打印时会尽量避免被分页截断。</p>
+                        </div>
+                        <div class="border border-dashed border-gray-300 p-4">
+                            <h4 class="font-bold">正常内容</h4>
+                            <p>这个内容块在打印时可能会被分页截断。</p>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">尝试使用浏览器的打印预览功能查看分页效果。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 任意值 -->
+        <section id="arbitrary-values" class="mt-12">
+            <h2 class="category-title text-2xl font-semibold dark:text-white">任意值 (Arbitrary Values)</h2>
+            
+            <div class="example-card dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 border-b bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-medium dark:text-white">任意尺寸和颜色</h3>
+                </div>
+                <div class="p-4 border-b dark:border-gray-700">
+                    <div class="code-block mb-4">
+                        &lt;div class="w-[200px] h-[100px] bg-[#1da1f2] text-white flex items-center justify-center rounded"&gt;<br>
+                        &nbsp;&nbsp;自定义尺寸和颜色<br>
+                        &lt;/div&gt;<br>
+                        &lt;div class="mt-4 text-[18px] leading-[1.8] text-[#ff5733]"&gt;<br>
+                        &nbsp;&nbsp;自定义字体大小、行高和颜色<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box flex flex-col space-y-4">
+                        <div class="w-[200px] h-[100px] bg-[#1da1f2] text-white flex items-center justify-center rounded">
+                            自定义尺寸和颜色
+                        </div>
+                        <div class="text-[18px] leading-[1.8] text-[#ff5733]">
+                            自定义字体大小、行高和颜色
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 border-b bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-medium dark:text-white">任意属性</h3>
+                </div>
+                <div class="p-4 border-b dark:border-gray-700">
+                    <div class="code-block mb-4">
+                        &lt;div class="[mask-type:alpha] [filter:url(#custom-filter)] [clip-path:polygon(50%_0%,100%_50%,50%_100%,0%_50%)] bg-blue-500 w-32 h-32"&gt;<br>
+                        &nbsp;&nbsp;自定义CSS属性<br>
+                        &lt;/div&gt;<br>
+                        &lt;div class="mt-4 [column-count:3] [column-gap:2rem] [column-rule:1px_solid_#ccc]"&gt;<br>
+                        &nbsp;&nbsp;&lt;p&gt;第一段内容...&lt;/p&gt;<br>
+                        &nbsp;&nbsp;&lt;p&gt;第二段内容...&lt;/p&gt;<br>
+                        &nbsp;&nbsp;&lt;p&gt;第三段内容...&lt;/p&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="[clip-path:polygon(50%_0%,100%_50%,50%_100%,0%_50%)] bg-blue-500 w-32 h-32 flex items-center justify-center text-white text-xs text-center mx-auto">
+                            自定义Clip-path
+                        </div>
+                        <div class="mt-4 [column-count:2] [column-gap:2rem] [column-rule:1px_solid_#ccc]">
+                            <p class="mb-2">第一段内容：Tailwind CSS 是一个功能类优先的 CSS 框架。</p>
+                            <p class="mb-2">第二段内容：它使您能够快速构建自定义用户界面。</p>
+                            <p class="mb-2">第三段内容：无需离开 HTML 即可实现复杂的设计。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 高级动画 -->
+        <section id="advanced-animations" class="mt-12">
+            <h2 class="category-title text-2xl font-semibold dark:text-white">高级动画 (Advanced Animations)</h2>
+            
+            <div class="example-card dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 border-b bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-medium dark:text-white">自定义动画</h3>
+                </div>
+                <div class="p-4 border-b dark:border-gray-700">
+                    <div class="code-block mb-4">
+                        // tailwind.config.js<br>
+                        module.exports = {<br>
+                        &nbsp;&nbsp;theme: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;extend: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;animation: {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'spin-slow': 'spin 3s linear infinite',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'bounce-slow': 'bounce 2s infinite',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}<br>
+                        }<br>
+                        <br>
+                        &lt;div class="flex space-x-4"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-blue-500 rounded animate-spin-slow"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-green-500 rounded animate-bounce-slow"&gt;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="w-16 h-16 bg-red-500 rounded animate-pulse-slow"&gt;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="flex space-x-4 justify-center">
+                            <div class="w-16 h-16 bg-blue-500 rounded animate-spin-slow flex items-center justify-center text-white text-xs">慢速旋转</div>
+                            <div class="w-16 h-16 bg-green-500 rounded animate-bounce-slow flex items-center justify-center text-white text-xs">慢速弹跳</div>
+                            <div class="w-16 h-16 bg-red-500 rounded animate-pulse-slow flex items-center justify-center text-white text-xs">慢速脉冲</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-card dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 border-b bg-gray-50 dark:bg-gray-700">
+                    <h3 class="font-medium dark:text-white">渐变动画</h3>
+                </div>
+                <div class="p-4 border-b dark:border-gray-700">
+                    <div class="code-block mb-4">
+                        &lt;div class="h-32 bg-gradient-to-r from-blue-500 to-purple-500 animate-gradient-x rounded-lg flex items-center justify-center text-white"&gt;<br>
+                        &nbsp;&nbsp;水平渐变背景<br>
+                        &lt;/div&gt;<br>
+                        &lt;style&gt;<br>
+                        &nbsp;&nbsp;@keyframes gradient-x {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;0% { background-position: 0% 50%; }<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;50% { background-position: 100% 50%; }<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;100% { background-position: 0% 50%; }<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;.animate-gradient-x {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;background-size: 200% 200%;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;animation: gradient-x 3s ease infinite;<br>
+                        &nbsp;&nbsp;}<br>
+                        &lt;/style&gt;
+                    </div>
+                    <div class="preview-box">
+                        <div class="h-32 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center text-white relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 animate-gradient-x"></div>
+                            <span class="relative z-10">水平渐变动画效果</span>
+                        </div>
+                        <style>
+                            @keyframes gradient-x {
+                                0% { background-position: 0% 50%; }
+                                50% { background-position: 100% 50%; }
+                                100% { background-position: 0% 50%; }
+                            }
+                            .animate-gradient-x {
+                                background-size: 200% 200%;
+                                animation: gradient-x 3s ease infinite;
+                            }
+                        </style>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12 dark:bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <p>Tailwind CSS v3 可视化学习字典 - 高级功能</p>
+            <p class="text-gray-400 text-sm mt-2">基于Tailwind CSS官方文档制作 - 供学习参考使用</p>
+            <div class="mt-4">
+                <a href="#" class="text-blue-300 hover:text-blue-100 text-sm">返回顶部 ↑</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 暗黑模式切换
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        // 检查本地存储或系统偏好
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+        
+        // 切换主题
+        themeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            localStorage.theme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
+        });
+    </script>
+</body>
+</html>

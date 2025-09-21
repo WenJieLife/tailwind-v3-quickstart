@@ -2,8 +2,8 @@
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import { serveDir } from "https://deno.land/std@0.224.0/http/file_server.ts";
 
-// 定义服务器端口，优先使用环境变量中的端口，否则使用默认端口 8000
-const PORT = parseInt(Deno.env.get("PORT") || "8000");
+// 定义服务器端口，优先使用环境变量中的端口，否则使用默认端口 80
+const PORT = parseInt(Deno.env.get("PORT") || "80");
 
 // 读取HTML文件内容
 async function loadHTMLFile(filename) {

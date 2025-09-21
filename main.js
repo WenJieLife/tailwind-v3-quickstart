@@ -8,7 +8,7 @@ const PORT = parseInt(Deno.env.get("PORT") || "80");
 // 读取HTML文件内容
 async function loadHTMLFile(filename) {
   try {
-    const content = await Deno.readTextFile(filename);
+    const content = await Deno.readTextFile("./src/" + filename);
     return content;
   } catch (error) {
     console.error(`Error reading file ${filename}:`, error);
